@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مدیریت مالی من</string>
+
+    <string name="current_balance">موجودی فعلی</string>
+    <string name="total_income">درآمد</string>
+    <string name="total_expense">هزینه</string>
+    <string name="add_income">＋ درآمد</string>
+    <string name="add_expense">－ هزینه</string>
+    <string name="recent_transactions">آخرین تراکنش‌ها</string>
+    <string name="no_transactions">هنوز تراکنشی ثبت نشده است</string>
+
+    <string name="amount">مبلغ (تومان)</string>
+    <string name="description_hint">توضیح</string>
+    <string name="save">ذخیره</string>
+    <string name="cancel">انصراف</string>
+    <string name="new_income">ثبت درآمد جدید</string>
+    <string name="new_expense">ثبت هزینه جدید</string>
+    <string name="amount_required">لطفاً مبلغ را وارد کنید</string>
+    <string name="toman">تومان</string>
+</resources>
