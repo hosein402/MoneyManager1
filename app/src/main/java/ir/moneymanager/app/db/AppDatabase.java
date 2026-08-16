@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {TransactionEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {TransactionEntity.class, InstallmentEntity.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
@@ -17,6 +17,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(2);
 
     public abstract TransactionDao transactionDao();
+
+    public abstract InstallmentDao installmentDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
@@ -26,10 +28,11 @@ public abstract class AppDatabase extends RoomDatabase {
                                     context.getApplicationContext(),
                                     AppDatabase.class,
                                     "money_manager_db")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
-                      }
+}
