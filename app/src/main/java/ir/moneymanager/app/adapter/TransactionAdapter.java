@@ -18,12 +18,18 @@ import ir.moneymanager.app.util.PersianUtils;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(TransactionEntity item);
+    }
+
     private List<TransactionEntity> items;
     private final Context context;
+    private final OnItemClickListener listener;
 
-    public TransactionAdapter(Context context, List<TransactionEntity> items) {
+    public TransactionAdapter(Context context, List<TransactionEntity> items, OnItemClickListener listener) {
         this.context = context;
         this.items = items;
+        this.listener = listener;
     }
 
     public void updateItems(List<TransactionEntity> newItems) {
@@ -56,6 +62,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         CharSequence dateStr = DateFormat.format("yyyy/MM/dd HH:mm", item.getDate());
         holder.date.setText(PersianUtils.toPersianDigits(dateStr.toString()));
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(item);
+        });
     }
 
     @Override
