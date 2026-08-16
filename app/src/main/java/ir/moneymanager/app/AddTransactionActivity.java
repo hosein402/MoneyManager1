@@ -2,13 +2,17 @@ package ir.moneymanager.app;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
 
 import ir.moneymanager.app.db.AppDatabase;
 import ir.moneymanager.app.db.TransactionEntity;
@@ -21,6 +25,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     private EditText etAmount, etDescription;
     private int existingId = -1;
     private String transactionType;
+    private boolean isFormattingAmount = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         Button btnSave = findViewById(R.id.btnSave);
         Button btnCancel = findViewById(R.id.btnCancel);
         Button btnDelete = findViewById(R.id.btnDelete);
+
+        setupAmountFormatting();
 
         AppDatabase db = AppDatabase.getInstance(this);
 
@@ -72,7 +79,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(v -> finish());
 
         btnSave.setOnClickListener(v -> {
-            String amountStr = etAmount.getText().toString().trim();
+            String amountStr = etAmount.getText().toString().trim().replace(",", "");
             if (TextUtils.isEmpty(amountStr)) {
                 Toast.makeText(this, R.string.amount_required, Toast.LENGTH_SHORT).show();
                 return;
@@ -105,6 +112,38 @@ public class AddTransactionActivity extends AppCompatActivity {
                     db.transactionDao().insert(entity);
                     runOnUiThread(this::finish);
                 });
+            }
+        });
+    }
+
+    private void setupAmountFormatting() {
+        etAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isFormattingAmount) return;
+
+                String raw = s.toString().replace(",", "");
+                isFormattingAmount = true;
+
+                if (!raw.isEmpty()) {
+                    try {
+                        long value = Long.parseLong(raw);
+                        String formatted = String.format(Locale.US, "%,d", value);
+                        etAmount.setText(formatted);
+                        etAmount.setSelection(formatted.length());
+                    } catch (NumberFormatException e) {
+                        etAmount.setText(raw);
+                        etAmount.setSelection(raw.length());
+                    }
+                }
+
+                isFormattingAmount = false;
             }
         });
     }
