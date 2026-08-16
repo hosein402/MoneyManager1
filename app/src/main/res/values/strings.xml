@@ -17,5 +17,16 @@
     <string name="new_income">ثبت درآمد جدید</string>
     <string name="new_expense">ثبت هزینه جدید</string>
     <string name="amount_required">لطفاً مبلغ را وارد کنید</string>
-    <string name="toman">تومان</string>
+ <string name="toman">تومان</string>
+    <string name="installments_title">اقساط</string>
+    <string name="add_installment">＋ افزودن قسط جدید</string>
+    <string name="no_installments">هنوز قسطی ثبت نشده است</string>
+    <string name="new_installment">قسط جدید</string>
+    <string name="installment_title_hint">عنوان (مثلاً قسط خودرو)</string>
+    <string name="installment_amount_hint">مبلغ هر قسط (تومان)</string>
+    <string name="installment_count_hint">تعداد کل اقساط</string>
+    <string name="pay_installment">پرداخت این قسط</string>
+    <string name="delete_installment">حذف</string>
+    <string name="installment_progress">پرداخت‌شده</string>
+    <string name="installment_completed">تسویه شده</string>
 </resources>
