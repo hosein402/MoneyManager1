@@ -7,6 +7,14 @@
     android:background="@color/background"
     android:padding="16dp">
 
+    <Button
+        android:id="@+id/btnInstallments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/white"
+        android:text="@string/installments_title"
+        android:layout_marginBottom="16dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
