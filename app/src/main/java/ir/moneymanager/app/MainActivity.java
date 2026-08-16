@@ -54,13 +54,13 @@ Button btnInstallments = findViewById(R.id.btnInstallments);
         btnAddIncome.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_INCOME));
        btnAddExpense.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_EXPENSE));
 btnInstallments.setOnClickListener(v -> startActivity(new Intent(this, InstallmentsActivity.class)));
-    }
+    }btnSearch.setOnClickListener(v -> startActivity(new Intent(this, SearchActivity.class)));
 
     private void openAddTransaction(String type) {
         Intent intent = new Intent(this, AddTransactionActivity.class);
         intent.putExtra(AddTransactionActivity.EXTRA_TYPE, type);
         startActivity(intent);
-  btnSearch.setOnClickListener(v -> startActivity(new Intent(this, SearchActivity.class)));
+  
     }
 
     @Override
