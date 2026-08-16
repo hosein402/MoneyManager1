@@ -27,11 +27,15 @@ public class TransactionEntity {
     @ColumnInfo(name = "type")
     private String type;
 
-    public TransactionEntity(long amount, String description, long date, @NonNull String type) {
+    @ColumnInfo(name = "category")
+    private String category;
+
+    public TransactionEntity(long amount, String description, long date, @NonNull String type, String category) {
         this.amount = amount;
         this.description = description;
         this.date = date;
         this.type = type;
+        this.category = category;
     }
 
     public int getId() {
@@ -73,5 +77,13 @@ public class TransactionEntity {
 
     public void setType(@NonNull String type) {
         this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
