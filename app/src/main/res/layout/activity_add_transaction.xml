@@ -24,6 +24,8 @@
         android:inputType="number"
         android:textDirection="ltr"
         android:gravity="end"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
         android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
@@ -33,13 +35,16 @@
         android:layout_height="wrap_content"
         android:hint="@string/description_hint"
         android:inputType="text"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
         android:textSize="16sp"
         android:layout_marginBottom="24dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
 
         <Button
             android:id="@+id/btnSave"
@@ -59,5 +64,14 @@
             android:layout_marginStart="6dp"
             android:text="@string/cancel" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/expense_red"
+        android:textColor="@color/white"
+        android:text="@string/delete"
+        android:visibility="gone" />
 
 </LinearLayout>
