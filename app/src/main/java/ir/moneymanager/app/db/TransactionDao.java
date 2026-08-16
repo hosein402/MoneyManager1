@@ -33,4 +33,10 @@ public interface TransactionDao {
 
     @Query("SELECT IFNULL(SUM(amount), 0) FROM transactions WHERE type = 'EXPENSE'")
     long getTotalExpense();
+
+    @Query("SELECT * FROM transactions " +
+            "WHERE (description LIKE '%' || :query || '%' OR category LIKE '%' || :query || '%') " +
+            "AND date BETWEEN :startDate AND :endDate " +
+            "ORDER BY date DESC")
+    List<TransactionEntity> search(String query, long startDate, long endDate);
 }
