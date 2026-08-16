@@ -55,6 +55,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 ? (isIncome ? context.getString(R.string.total_income) : context.getString(R.string.total_expense))
                 : desc);
 
+        String category = item.getCategory();
+        if (category == null || category.trim().isEmpty()) {
+            holder.category.setVisibility(View.GONE);
+        } else {
+            holder.category.setVisibility(View.VISIBLE);
+            holder.category.setText(category);
+        }
+
         String sign = isIncome ? "+" : "-";
         holder.amount.setText(sign + " " + PersianUtils.formatAmount(item.getAmount()) + " " + context.getString(R.string.toman));
         holder.amount.setTextColor(context.getResources().getColor(
@@ -74,11 +82,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView description, amount, date;
+        TextView description, category, amount, date;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             description = itemView.findViewById(R.id.tvItemDescription);
+            category = itemView.findViewById(R.id.tvItemCategory);
             amount = itemView.findViewById(R.id.tvItemAmount);
             date = itemView.findViewById(R.id.tvItemDate);
         }
