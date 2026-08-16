@@ -66,4 +66,27 @@ public class InstallmentAdapter extends RecyclerView.Adapter<InstallmentAdapter.
             if (listener != null) listener.onPay(item);
         });
 
-        hold
+        holder.btnDelete.setOnClickListener(v -> {
+            if (listener != null) listener.onDelete(item);
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return items == null ? 0 : items.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView title, progress, amount;
+        Button btnPay, btnDelete;
+
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.tvInstallmentTitle);
+            progress = itemView.findViewById(R.id.tvInstallmentProgress);
+            amount = itemView.findViewById(R.id.tvInstallmentAmount);
+            btnPay = itemView.findViewById(R.id.btnPayInstallment);
+            btnDelete = itemView.findViewById(R.id.btnDeleteInstallment);
+        }
+    }
+}
