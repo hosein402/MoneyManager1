@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="expense_categories">
+        <item>خوراک</item>
+        <item>حمل و نقل</item>
+        <item>قبوض</item>
+        <item>خرید</item>
+        <item>سلامت</item>
+        <item>تفریح</item>
+        <item>سایر</item>
+    </string-array>
+
+    <string-array name="income_categories">
+        <item>حقوق</item>
+        <item>فروش</item>
+        <item>هدیه</item>
+        <item>سایر</item>
+    </string-array>
+</resources>
