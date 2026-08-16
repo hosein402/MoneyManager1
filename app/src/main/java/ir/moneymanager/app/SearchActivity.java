@@ -1,12 +1,15 @@
 package ir.moneymanager.app;
 
-import android.app.DatePickerDialog;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import ir.moneymanager.app.adapter.TransactionAdapter;
@@ -92,22 +94,52 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void pickDate(boolean isFrom) {
-        Calendar cal = Calendar.getInstance();
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-            Calendar picked = Calendar.getInstance();
-            picked.set(year, month, dayOfMonth, isFrom ? 0 : 23, isFrom ? 0 : 59, isFrom ? 0 : 59);
+        long baseMillis = isFrom
+                ? (fromDate == 0 ? System.currentTimeMillis() : fromDate)
+                : (toDate == Long.MAX_VALUE ? System.currentTimeMillis() : toDate);
+        int[] jalali = PersianUtils.millisToJalali(baseMillis);
 
-            String label = PersianUtils.toPersianDigits(year + "/" + (month + 1) + "/" + dayOfMonth);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_persian_date_picker, null);
+        NumberPicker npYear = view.findViewById(R.id.npYear);
+        NumberPicker npMonth = view.findViewById(R.id.npMonth);
+        NumberPicker npDay = view.findViewById(R.id.npDay);
 
-            if (isFrom) {
-                fromDate = picked.getTimeInMillis();
-                btnFromDate.setText(label);
-            } else {
-                toDate = picked.getTimeInMillis();
-                btnToDate.setText(label);
-            }
-            runSearch();
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+        npYear.setMinValue(1370);
+        npYear.setMaxValue(1420);
+        npYear.setValue(jalali[0]);
+
+        String[] monthNames = new String[12];
+        for (int i = 0; i < 12; i++) monthNames[i] = PersianUtils.jalaliMonthName(i + 1);
+        npMonth.setMinValue(1);
+        npMonth.setMaxValue(12);
+        npMonth.setDisplayedValues(monthNames);
+        npMonth.setValue(jalali[1]);
+
+        npDay.setMinValue(1);
+        npDay.setMaxValue(31);
+        npDay.setValue(jalali[2]);
+
+        new AlertDialog.Builder(this)
+                .setView(view)
+                .setPositiveButton(R.string.select_date, (dialog, which) -> {
+                    int jy = npYear.getValue();
+                    int jm = npMonth.getValue();
+                    int jd = npDay.getValue();
+
+                    long millis = PersianUtils.jalaliToMillis(jy, jm, jd, isFrom ? 0 : 23, isFrom ? 0 : 59);
+                    String label = PersianUtils.toPersianDigits(jy + "/" + jm + "/" + jd);
+
+                    if (isFrom) {
+                        fromDate = millis;
+                        btnFromDate.setText(label);
+                    } else {
+                        toDate = millis;
+                        btnToDate.setText(label);
+                    }
+                    runSearch();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     private void runSearch() {
