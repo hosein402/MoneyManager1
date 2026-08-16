@@ -1,5 +1,6 @@
 package ir.moneymanager.app;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -15,27 +16,58 @@ import ir.moneymanager.app.db.TransactionEntity;
 public class AddTransactionActivity extends AppCompatActivity {
 
     public static final String EXTRA_TYPE = "extra_type";
+    public static final String EXTRA_ID = "extra_id";
 
     private EditText etAmount, etDescription;
+    private int existingId = -1;
+    private String transactionType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
 
-        String type = getIntent().getStringExtra(EXTRA_TYPE);
-        if (type == null) type = TransactionEntity.TYPE_EXPENSE;
-        final String transactionType = type;
+        transactionType = getIntent().getStringExtra(EXTRA_TYPE);
+        if (transactionType == null) transactionType = TransactionEntity.TYPE_EXPENSE;
+        existingId = getIntent().getIntExtra(EXTRA_ID, -1);
 
         TextView tvTitle = findViewById(R.id.tvFormTitle);
-        tvTitle.setText(TransactionEntity.TYPE_INCOME.equals(transactionType)
-                ? R.string.new_income : R.string.new_expense);
-
         etAmount = findViewById(R.id.etAmount);
         etDescription = findViewById(R.id.etDescription);
-
         Button btnSave = findViewById(R.id.btnSave);
         Button btnCancel = findViewById(R.id.btnCancel);
+        Button btnDelete = findViewById(R.id.btnDelete);
+
+        AppDatabase db = AppDatabase.getInstance(this);
+
+        if (existingId != -1) {
+            tvTitle.setText(R.string.edit_transaction);
+            btnDelete.setVisibility(android.view.View.VISIBLE);
+
+            AppDatabase.databaseWriteExecutor.execute(() -> {
+                TransactionEntity existing = db.transactionDao().getById(existingId);
+                if (existing != null) {
+                    runOnUiThread(() -> {
+                        etAmount.setText(String.valueOf(existing.getAmount()));
+                        etDescription.setText(existing.getDescription());
+                    });
+                }
+            });
+
+            btnDelete.setOnClickListener(v -> new AlertDialog.Builder(this)
+                    .setMessage(R.string.delete_confirm_message)
+                    .setPositiveButton(R.string.delete, (dialog, which) -> {
+                        AppDatabase.databaseWriteExecutor.execute(() -> {
+                            db.transactionDao().delete(existingId);
+                            runOnUiThread(this::finish);
+                        });
+                    })
+                    .setNegativeButton(R.string.cancel, null)
+                    .show());
+        } else {
+            tvTitle.setText(TransactionEntity.TYPE_INCOME.equals(transactionType)
+                    ? R.string.new_income : R.string.new_expense);
+        }
 
         btnCancel.setOnClickListener(v -> finish());
 
@@ -55,15 +87,25 @@ public class AddTransactionActivity extends AppCompatActivity {
             }
 
             String description = etDescription.getText().toString().trim();
-            long now = System.currentTimeMillis();
 
-            TransactionEntity entity = new TransactionEntity(amount, description, now, transactionType);
-
-            AppDatabase db = AppDatabase.getInstance(this);
-            AppDatabase.databaseWriteExecutor.execute(() -> {
-                db.transactionDao().insert(entity);
-                runOnUiThread(this::finish);
-            });
+            if (existingId != -1) {
+                AppDatabase.databaseWriteExecutor.execute(() -> {
+                    TransactionEntity existing = db.transactionDao().getById(existingId);
+                    if (existing != null) {
+                        existing.setAmount(amount);
+                        existing.setDescription(description);
+                        db.transactionDao().update(existing);
+                    }
+                    runOnUiThread(this::finish);
+                });
+            } else {
+                long now = System.currentTimeMillis();
+                TransactionEntity entity = new TransactionEntity(amount, description, now, transactionType);
+                AppDatabase.databaseWriteExecutor.execute(() -> {
+                    db.transactionDao().insert(entity);
+                    runOnUiThread(this::finish);
+                });
+            }
         });
     }
 }
