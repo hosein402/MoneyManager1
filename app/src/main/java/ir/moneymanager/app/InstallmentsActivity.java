@@ -67,12 +67,12 @@ public class InstallmentsActivity extends AppCompatActivity implements Installme
     public void onPay(InstallmentEntity item) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             db.installmentDao().markOnePaid(item.getId());
-
-            TransactionEntity expense = new TransactionEntity(
+TransactionEntity expense = new TransactionEntity(
                     item.getAmountPerInstallment(),
                     item.getTitle(),
                     System.currentTimeMillis(),
-                    TransactionEntity.TYPE_EXPENSE
+                    TransactionEntity.TYPE_EXPENSE,
+                    "اقساط"
             );
             db.transactionDao().insert(expense);
 
