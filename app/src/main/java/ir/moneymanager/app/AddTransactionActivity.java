@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "extra_id";
 
     private EditText etAmount, etDescription;
+    private Spinner spCategory;
     private int existingId = -1;
     private String transactionType;
     private boolean isFormattingAmount = false;
@@ -33,12 +36,12 @@ public class AddTransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_transaction);
 
         transactionType = getIntent().getStringExtra(EXTRA_TYPE);
-        if (transactionType == null) transactionType = TransactionEntity.TYPE_EXPENSE;
         existingId = getIntent().getIntExtra(EXTRA_ID, -1);
 
         TextView tvTitle = findViewById(R.id.tvFormTitle);
         etAmount = findViewById(R.id.etAmount);
         etDescription = findViewById(R.id.etDescription);
+        spCategory = findViewById(R.id.spCategory);
         Button btnSave = findViewById(R.id.btnSave);
         Button btnCancel = findViewById(R.id.btnCancel);
         Button btnDelete = findViewById(R.id.btnDelete);
@@ -57,6 +60,8 @@ public class AddTransactionActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         etAmount.setText(String.valueOf(existing.getAmount()));
                         etDescription.setText(existing.getDescription());
+                        transactionType = existing.getType();
+                        setupCategorySpinner(transactionType, existing.getCategory());
                     });
                 }
             });
@@ -72,8 +77,10 @@ public class AddTransactionActivity extends AppCompatActivity {
                     .setNegativeButton(R.string.cancel, null)
                     .show());
         } else {
+            if (transactionType == null) transactionType = TransactionEntity.TYPE_EXPENSE;
             tvTitle.setText(TransactionEntity.TYPE_INCOME.equals(transactionType)
                     ? R.string.new_income : R.string.new_expense);
+            setupCategorySpinner(transactionType, null);
         }
 
         btnCancel.setOnClickListener(v -> finish());
@@ -94,6 +101,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             }
 
             String description = etDescription.getText().toString().trim();
+            String category = spCategory.getSelectedItem() != null ? spCategory.getSelectedItem().toString() : "";
 
             if (existingId != -1) {
                 AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -101,19 +109,41 @@ public class AddTransactionActivity extends AppCompatActivity {
                     if (existing != null) {
                         existing.setAmount(amount);
                         existing.setDescription(description);
+                        existing.setCategory(category);
                         db.transactionDao().update(existing);
                     }
                     runOnUiThread(this::finish);
                 });
             } else {
                 long now = System.currentTimeMillis();
-                TransactionEntity entity = new TransactionEntity(amount, description, now, transactionType);
+                TransactionEntity entity = new TransactionEntity(amount, description, now, transactionType, category);
                 AppDatabase.databaseWriteExecutor.execute(() -> {
                     db.transactionDao().insert(entity);
                     runOnUiThread(this::finish);
                 });
             }
         });
+    }
+
+    private void setupCategorySpinner(String type, String selectedCategory) {
+        int arrayRes = TransactionEntity.TYPE_INCOME.equals(type)
+                ? R.array.income_categories
+                : R.array.expense_categories;
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, arrayRes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCategory.setAdapter(adapter);
+
+        if (selectedCategory != null) {
+            String[] items = getResources().getStringArray(arrayRes);
+            for (int i = 0; i < items.length; i++) {
+                if (items[i].equals(selectedCategory)) {
+                    spCategory.setSelection(i);
+                    break;
+                }
+            }
+        }
     }
 
     private void setupAmountFormatting() {
