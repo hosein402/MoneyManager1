@@ -33,4 +33,11 @@
     <string name="delete">حذف</string>
     <string name="delete_confirm_message">آیا از حذف این تراکنش مطمئن هستید؟</string>
 <string name="category_label">دسته‌بندی</string>
+<string name="search_title">جستجوی تراکنش‌ها</string>
+    <string name="search_hint">جستجو بر اساس توضیح یا دسته…</string>
+    <string name="from_date">از تاریخ</string>
+    <string name="to_date">تا تاریخ</string>
+    <string name="select_date">انتخاب تاریخ</string>
+    <string name="clear_filter">پاک‌کردن فیلتر</string>
+    <string name="no_results">نتیجه‌ای یافت نشد</string>
 </resources>
