@@ -29,4 +29,7 @@
     <string name="delete_installment">حذف</string>
     <string name="installment_progress">پرداخت‌شده</string>
     <string name="installment_completed">تسویه شده</string>
+<string name="edit_transaction">ویرایش تراکنش</string>
+    <string name="delete">حذف</string>
+    <string name="delete_confirm_message">آیا از حذف این تراکنش مطمئن هستید؟</string>
 </resources>
