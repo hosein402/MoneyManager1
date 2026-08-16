@@ -1,7 +1,6 @@
 package ir.moneymanager.app.adapter;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +67,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.amount.setTextColor(context.getResources().getColor(
                 isIncome ? R.color.income_green : R.color.expense_red));
 
-        CharSequence dateStr = DateFormat.format("yyyy/MM/dd HH:mm", item.getDate());
-        holder.date.setText(PersianUtils.toPersianDigits(dateStr.toString()));
+        holder.date.setText(PersianUtils.toJalaliDateString(item.getDate()));
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onItemClick(item);
@@ -92,4 +90,4 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             date = itemView.findViewById(R.id.tvItemDate);
         }
     }
-}
+        }
