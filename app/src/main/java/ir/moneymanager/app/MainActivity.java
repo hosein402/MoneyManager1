@@ -39,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         rvTransactions = findViewById(R.id.rvTransactions);
 
         rvTransactions.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TransactionAdapter(this, new ArrayList<>());
+        adapter = new TransactionAdapter(this, new ArrayList<>(), item -> {
+            Intent intent = new Intent(this, AddTransactionActivity.class);
+            intent.putExtra(AddTransactionActivity.EXTRA_ID, item.getId());
+            startActivity(intent);
+        });
         rvTransactions.setAdapter(adapter);
 
         Button btnAddIncome = findViewById(R.id.btnAddIncome);
