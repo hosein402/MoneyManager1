@@ -3,40 +3,21 @@ package ir.moneymanager.app.db;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
 @Dao
-public interface TransactionDao {
+public interface InstallmentDao {
 
     @Insert
-    void insert(TransactionEntity transaction);
+    void insert(InstallmentEntity installment);
 
-    @Update
-    void update(TransactionEntity transaction);
+    @Query("SELECT * FROM installments ORDER BY id DESC")
+    List<InstallmentEntity> getAll();
 
-    @Query("DELETE FROM transactions WHERE id = :id")
+    @Query("UPDATE installments SET paidCount = paidCount + 1 WHERE id = :id")
+    void markOnePaid(int id);
+
+    @Query("DELETE FROM installments WHERE id = :id")
     void delete(int id);
-
-    @Query("SELECT * FROM transactions WHERE id = :id")
-    TransactionEntity getById(int id);
-
-    @Query("SELECT * FROM transactions ORDER BY date DESC")
-    List<TransactionEntity> getAllTransactions();
-
-    @Query("SELECT * FROM transactions ORDER BY date DESC LIMIT :limit")
-    List<TransactionEntity> getRecentTransactions(int limit);
-
-    @Query("SELECT IFNULL(SUM(amount), 0) FROM transactions WHERE type = 'INCOME'")
-    long getTotalIncome();
-
-    @Query("SELECT IFNULL(SUM(amount), 0) FROM transactions WHERE type = 'EXPENSE'")
-    long getTotalExpense();
-
-    @Query("SELECT * FROM transactions " +
-            "WHERE (description LIKE '%' || :query || '%' OR category LIKE '%' || :query || '%') " +
-            "AND date BETWEEN :startDate AND :endDate " +
-            "ORDER BY date DESC")
-    List<TransactionEntity> search(String query, long startDate, long endDate);
 }
