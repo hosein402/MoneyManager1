@@ -48,19 +48,19 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnAddIncome = findViewById(R.id.btnAddIncome);
         Button btnAddExpense = findViewById(R.id.btnAddExpense);
-Button btnInstallments = findViewById(R.id.btnInstallments);
-     Button btnSearch = findViewById(R.id.btnSearch);
-        
+        Button btnInstallments = findViewById(R.id.btnInstallments);
+        Button btnSearch = findViewById(R.id.btnSearch);
+
         btnAddIncome.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_INCOME));
-       btnAddExpense.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_EXPENSE));
-btnInstallments.setOnClickListener(v -> startActivity(new Intent(this, InstallmentsActivity.class)));
-    }btnSearch.setOnClickListener(v -> startActivity(new Intent(this, SearchActivity.class)));
+        btnAddExpense.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_EXPENSE));
+        btnInstallments.setOnClickListener(v -> startActivity(new Intent(this, InstallmentsActivity.class)));
+        btnSearch.setOnClickListener(v -> startActivity(new Intent(this, SearchActivity.class)));
+    }
 
     private void openAddTransaction(String type) {
         Intent intent = new Intent(this, AddTransactionActivity.class);
         intent.putExtra(AddTransactionActivity.EXTRA_TYPE, type);
         startActivity(intent);
-  
     }
 
     @Override
