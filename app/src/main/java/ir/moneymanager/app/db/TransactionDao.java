@@ -39,4 +39,15 @@ public interface TransactionDao {
             "AND date BETWEEN :startDate AND :endDate " +
             "ORDER BY date DESC")
     List<TransactionEntity> search(String query, long startDate, long endDate);
+
+    @Query("SELECT IFNULL(SUM(amount), 0) FROM transactions WHERE type = 'INCOME' AND date BETWEEN :start AND :end")
+    long getIncomeByRange(long start, long end);
+
+    @Query("SELECT IFNULL(SUM(amount), 0) FROM transactions WHERE type = 'EXPENSE' AND date BETWEEN :start AND :end")
+    long getExpenseByRange(long start, long end);
+
+    @Query("SELECT category, SUM(amount) as total FROM transactions " +
+            "WHERE type = :type AND date BETWEEN :start AND :end AND category IS NOT NULL " +
+            "GROUP BY category ORDER BY total DESC")
+    List<CategoryTotal> getCategoryTotals(String type, long start, long end);
 }
