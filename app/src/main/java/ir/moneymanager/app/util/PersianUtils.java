@@ -130,4 +130,31 @@ public class PersianUtils {
         if (month < 1 || month > 12) return "";
         return JALALI_MONTHS[month - 1];
     }
+
+    public static int[] todayJalali() {
+        return millisToJalali(System.currentTimeMillis());
+    }
+
+    public static long[] getDayRange() {
+        int[] j = todayJalali();
+        long start = jalaliToMillis(j[0], j[1], j[2], 0, 0);
+        long dayMillis = 24L * 60 * 60 * 1000;
+        return new long[]{start, start + dayMillis - 1};
+    }
+
+    public static long[] getMonthRange() {
+        int[] j = todayJalali();
+        long start = jalaliToMillis(j[0], j[1], 1, 0, 0);
+        int nextY = (j[1] == 12) ? j[0] + 1 : j[0];
+        int nextM = (j[1] == 12) ? 1 : j[1] + 1;
+        long end = jalaliToMillis(nextY, nextM, 1, 0, 0) - 1;
+        return new long[]{start, end};
+    }
+
+    public static long[] getYearRange() {
+        int[] j = todayJalali();
+        long start = jalaliToMillis(j[0], 1, 1, 0, 0);
+        long end = jalaliToMillis(j[0] + 1, 1, 1, 0, 0) - 1;
+        return new long[]{start, end};
+    }
 }
