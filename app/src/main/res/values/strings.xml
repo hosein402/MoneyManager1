@@ -40,4 +40,10 @@
     <string name="select_date">انتخاب تاریخ</string>
     <string name="clear_filter">پاک‌کردن فیلتر</string>
     <string name="no_results">نتیجه‌ای یافت نشد</string>
+<string name="reports_title">گزارش‌ها</string>
+    <string name="period_daily">روزانه</string>
+    <string name="period_monthly">ماهانه</string>
+    <string name="period_yearly">سالانه</string>
+    <string name="category_breakdown_title">تفکیک هزینه‌ها بر اساس دسته</string>
+    <string name="no_category_data">هزینه‌ای در این بازه ثبت نشده است</string>
 </resources>
