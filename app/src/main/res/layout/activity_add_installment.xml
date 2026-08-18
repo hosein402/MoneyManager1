@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/installment_title_hint"
         android:inputType="text"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
         android:textSize="16sp"
         android:layout_marginBottom="16dp" />
 
@@ -33,6 +35,8 @@
         android:inputType="number"
         android:textDirection="ltr"
         android:gravity="end"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
         android:textSize="16sp"
         android:layout_marginBottom="16dp" />
 
@@ -44,7 +48,23 @@
         android:inputType="number"
         android:textDirection="ltr"
         android:gravity="end"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
         android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bank_label"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp"
+        android:layout_marginBottom="4dp" />
+
+    <Spinner
+        android:id="@+id/spInstallmentBank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="24dp" />
 
     <LinearLayout
