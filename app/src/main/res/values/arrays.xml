@@ -16,4 +16,18 @@
         <item>هدیه</item>
         <item>سایر</item>
     </string-array>
+<string-array name="bank_list">
+        <item>بانک ملی</item>
+        <item>بانک ملت</item>
+        <item>بانک سپه</item>
+        <item>بانک صادرات</item>
+        <item>بانک تجارت</item>
+        <item>بانک پاسارگاد</item>
+        <item>بانک سامان</item>
+        <item>بانک پارسیان</item>
+        <item>بانک رفاه</item>
+        <item>بانک کشاورزی</item>
+        <item>بانک مسکن</item>
+        <item>نقدی / سایر</item>
+    </string-array>
 </resources>
