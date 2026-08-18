@@ -62,6 +62,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.category.setText(category);
         }
 
+        String bank = item.getBank();
+        if (bank == null || bank.trim().isEmpty()) {
+            holder.bank.setVisibility(View.GONE);
+        } else {
+            holder.bank.setVisibility(View.VISIBLE);
+            holder.bank.setText(bank);
+        }
+
         String sign = isIncome ? "+" : "-";
         holder.amount.setText(sign + " " + PersianUtils.formatAmount(item.getAmount()) + " " + context.getString(R.string.toman));
         holder.amount.setTextColor(context.getResources().getColor(
@@ -80,14 +88,15 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView description, category, amount, date;
+        TextView description, category, bank, amount, date;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             description = itemView.findViewById(R.id.tvItemDescription);
             category = itemView.findViewById(R.id.tvItemCategory);
+            bank = itemView.findViewById(R.id.tvItemBank);
             amount = itemView.findViewById(R.id.tvItemAmount);
             date = itemView.findViewById(R.id.tvItemDate);
         }
     }
-        }
+}
