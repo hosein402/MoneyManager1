@@ -25,7 +25,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "extra_id";
 
     private EditText etAmount, etDescription;
-    private Spinner spCategory;
+    private Spinner spCategory, spBank;
     private int existingId = -1;
     private String transactionType;
     private boolean isFormattingAmount = false;
@@ -42,11 +42,13 @@ public class AddTransactionActivity extends AppCompatActivity {
         etAmount = findViewById(R.id.etAmount);
         etDescription = findViewById(R.id.etDescription);
         spCategory = findViewById(R.id.spCategory);
+        spBank = findViewById(R.id.spBank);
         Button btnSave = findViewById(R.id.btnSave);
         Button btnCancel = findViewById(R.id.btnCancel);
         Button btnDelete = findViewById(R.id.btnDelete);
 
         setupAmountFormatting();
+        setupBankSpinner(null);
 
         AppDatabase db = AppDatabase.getInstance(this);
 
@@ -62,6 +64,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                         etDescription.setText(existing.getDescription());
                         transactionType = existing.getType();
                         setupCategorySpinner(transactionType, existing.getCategory());
+                        setupBankSpinner(existing.getBank());
                     });
                 }
             });
@@ -102,6 +105,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
             String description = etDescription.getText().toString().trim();
             String category = spCategory.getSelectedItem() != null ? spCategory.getSelectedItem().toString() : "";
+            String bank = spBank.getSelectedItem() != null ? spBank.getSelectedItem().toString() : "";
 
             if (existingId != -1) {
                 AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -110,13 +114,14 @@ public class AddTransactionActivity extends AppCompatActivity {
                         existing.setAmount(amount);
                         existing.setDescription(description);
                         existing.setCategory(category);
+                        existing.setBank(bank);
                         db.transactionDao().update(existing);
                     }
                     runOnUiThread(this::finish);
                 });
             } else {
                 long now = System.currentTimeMillis();
-                TransactionEntity entity = new TransactionEntity(amount, description, now, transactionType, category);
+                TransactionEntity entity = new TransactionEntity(amount, description, now, transactionType, category, bank);
                 AppDatabase.databaseWriteExecutor.execute(() -> {
                     db.transactionDao().insert(entity);
                     runOnUiThread(this::finish);
@@ -140,6 +145,23 @@ public class AddTransactionActivity extends AppCompatActivity {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(selectedCategory)) {
                     spCategory.setSelection(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void setupBankSpinner(String selectedBank) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.bank_list, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spBank.setAdapter(adapter);
+
+        if (selectedBank != null) {
+            String[] items = getResources().getStringArray(R.array.bank_list);
+            for (int i = 0; i < items.length; i++) {
+                if (items[i].equals(selectedBank)) {
+                    spBank.setSelection(i);
                     break;
                 }
             }
@@ -177,4 +199,4 @@ public class AddTransactionActivity extends AppCompatActivity {
             }
         });
     }
-}
+    }
