@@ -52,6 +52,14 @@ public class InstallmentAdapter extends RecyclerView.Adapter<InstallmentAdapter.
 
         holder.title.setText(item.getTitle());
 
+        String bank = item.getBank();
+        if (bank == null || bank.trim().isEmpty()) {
+            holder.bank.setVisibility(View.GONE);
+        } else {
+            holder.bank.setVisibility(View.VISIBLE);
+            holder.bank.setText(bank);
+        }
+
         boolean completed = item.getPaidCount() >= item.getInstallmentCount();
         String progress = PersianUtils.toPersianDigits(item.getPaidCount() + " / " + item.getInstallmentCount());
         holder.progress.setText(context.getString(R.string.installment_progress) + ": " + progress
@@ -77,12 +85,13 @@ public class InstallmentAdapter extends RecyclerView.Adapter<InstallmentAdapter.
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, progress, amount;
+        TextView title, bank, progress, amount;
         Button btnPay, btnDelete;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tvInstallmentTitle);
+            bank = itemView.findViewById(R.id.tvInstallmentBank);
             progress = itemView.findViewById(R.id.tvInstallmentProgress);
             amount = itemView.findViewById(R.id.tvInstallmentAmount);
             btnPay = itemView.findViewById(R.id.btnPayInstallment);
