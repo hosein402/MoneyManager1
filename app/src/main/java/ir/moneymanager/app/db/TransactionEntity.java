@@ -30,12 +30,16 @@ public class TransactionEntity {
     @ColumnInfo(name = "category")
     private String category;
 
-    public TransactionEntity(long amount, String description, long date, @NonNull String type, String category) {
+    @ColumnInfo(name = "bank")
+    private String bank;
+
+    public TransactionEntity(long amount, String description, long date, @NonNull String type, String category, String bank) {
         this.amount = amount;
         this.description = description;
         this.date = date;
         this.type = type;
         this.category = category;
+        this.bank = bank;
     }
 
     public int getId() {
@@ -85,5 +89,13 @@ public class TransactionEntity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 }
