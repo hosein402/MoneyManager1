@@ -27,12 +27,16 @@ public class InstallmentEntity {
     @ColumnInfo(name = "startDate")
     private long startDate;
 
-    public InstallmentEntity(@NonNull String title, long amountPerInstallment, int installmentCount, int paidCount, long startDate) {
+    @ColumnInfo(name = "bank")
+    private String bank;
+
+    public InstallmentEntity(@NonNull String title, long amountPerInstallment, int installmentCount, int paidCount, long startDate, String bank) {
         this.title = title;
         this.amountPerInstallment = amountPerInstallment;
         this.installmentCount = installmentCount;
         this.paidCount = paidCount;
         this.startDate = startDate;
+        this.bank = bank;
     }
 
     public int getId() {
@@ -82,5 +86,13 @@ public class InstallmentEntity {
 
     public void setStartDate(long startDate) {
         this.startDate = startDate;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 }
