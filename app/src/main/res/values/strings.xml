@@ -47,4 +47,15 @@
     <string name="category_breakdown_title">تفکیک هزینه‌ها بر اساس دسته</string>
     <string name="no_category_data">هزینه‌ای در این بازه ثبت نشده است</string>
 <string name="bank_label">حساب بانکی</string>
+<string name="debts_title">بدهی و طلب</string>
+    <string name="tab_debt">بدهی من</string>
+    <string name="tab_receivable">طلب من</string>
+    <string name="add_debt">＋ افزودن بدهی</string>
+    <string name="add_receivable">＋ افزودن طلب</string>
+    <string name="person_name_hint">نام طرف‌حساب</string>
+    <string name="new_debt">بدهی جدید</string>
+    <string name="new_receivable">طلب جدید</string>
+    <string name="settle">تسویه شد</string>
+    <string name="settled_label">تسویه‌شده</string>
+    <string name="no_debts">موردی ثبت نشده است</string>
 </resources>
