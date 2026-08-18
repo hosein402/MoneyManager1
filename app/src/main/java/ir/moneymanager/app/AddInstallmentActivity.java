@@ -2,8 +2,10 @@ package ir.moneymanager.app;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import ir.moneymanager.app.db.InstallmentEntity;
 public class AddInstallmentActivity extends AppCompatActivity {
 
     private EditText etTitle, etAmount, etCount;
+    private Spinner spBank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,12 @@ public class AddInstallmentActivity extends AppCompatActivity {
         etTitle = findViewById(R.id.etInstallmentTitle);
         etAmount = findViewById(R.id.etInstallmentAmount);
         etCount = findViewById(R.id.etInstallmentCount);
+        spBank = findViewById(R.id.spInstallmentBank);
+
+        ArrayAdapter<CharSequence> bankAdapter = ArrayAdapter.createFromResource(
+                this, R.array.bank_list, android.R.layout.simple_spinner_item);
+        bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spBank.setAdapter(bankAdapter);
 
         Button btnSave = findViewById(R.id.btnSaveInstallment);
         Button btnCancel = findViewById(R.id.btnCancelInstallment);
@@ -54,7 +63,9 @@ public class AddInstallmentActivity extends AppCompatActivity {
                 return;
             }
 
-            InstallmentEntity entity = new InstallmentEntity(title, amount, count, 0, System.currentTimeMillis());
+            String bank = spBank.getSelectedItem() != null ? spBank.getSelectedItem().toString() : "";
+
+            InstallmentEntity entity = new InstallmentEntity(title, amount, count, 0, System.currentTimeMillis(), bank);
 
             AppDatabase db = AppDatabase.getInstance(this);
             AppDatabase.databaseWriteExecutor.execute(() -> {
