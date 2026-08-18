@@ -46,4 +46,5 @@
     <string name="period_yearly">سالانه</string>
     <string name="category_breakdown_title">تفکیک هزینه‌ها بر اساس دسته</string>
     <string name="no_category_data">هزینه‌ای در این بازه ثبت نشده است</string>
+<string name="bank_label">حساب بانکی</string>
 </resources>
