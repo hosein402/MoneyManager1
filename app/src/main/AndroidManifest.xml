@@ -40,6 +40,15 @@
             android:name=".ReportsActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
+<activity
+            android:name=".DebtsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MoneyManager" />
+
+        <activity
+            android:name=".AddDebtActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MoneyManager" />
     </application>
 
 </manifest>
