@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {TransactionEntity.class, InstallmentEntity.class, DebtEntity.class, BudgetEntity.class}, version = 6, exportSchema = false)
+@Database(entities = {TransactionEntity.class, InstallmentEntity.class, DebtEntity.class, BudgetEntity.class, ReminderEntity.class}, version = 7, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
@@ -23,6 +23,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract DebtDao debtDao();
 
     public abstract BudgetDao budgetDao();
+
+    public abstract ReminderDao reminderDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
