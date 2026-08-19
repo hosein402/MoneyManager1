@@ -31,6 +31,15 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/income_green"
         android:textColor="@color/white"
-        android:text="@string/restore_now" />
+        android:text="@string/restore_now"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnExportCsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/card_background"
+        android:textColor="@color/text_primary"
+        android:text="@string/export_csv" />
 
 </LinearLayout>
