@@ -19,6 +19,9 @@ public interface TransactionDao {
     @Query("DELETE FROM transactions WHERE id = :id")
     void delete(int id);
 
+    @Query("DELETE FROM transactions")
+    void deleteAll();
+
     @Query("SELECT * FROM transactions WHERE id = :id")
     TransactionEntity getById(int id);
 
