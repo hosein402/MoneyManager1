@@ -69,4 +69,13 @@
     <string name="restore_confirm">با بازیابی، اطلاعات فعلی پاک و با اطلاعات فایل جایگزین می‌شود. ادامه می‌دهید؟</string>
     <string name="restore_success">اطلاعات با موفقیت بازیابی شد</string>
     <string name="restore_failed">فایل انتخابی معتبر نیست</string>
+<string name="reminders_title">یادآوری پرداخت</string>
+    <string name="add_reminder">＋ یادآور جدید</string>
+    <string name="reminder_title_hint">عنوان یادآور (مثلاً قسط خودرو)</string>
+    <string name="pick_date">انتخاب تاریخ</string>
+    <string name="pick_time">انتخاب ساعت</string>
+    <string name="no_reminders">یادآوری ثبت نشده است</string>
+    <string name="reminder_saved">یادآور ثبت شد</string>
+    <string name="notification_channel_name">یادآوری پرداخت‌ها</string>
+</parameter>
 </resources>
