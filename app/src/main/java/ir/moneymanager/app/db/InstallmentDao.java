@@ -20,4 +20,7 @@ public interface InstallmentDao {
 
     @Query("DELETE FROM installments WHERE id = :id")
     void delete(int id);
+
+    @Query("DELETE FROM installments")
+    void deleteAll();
 }
