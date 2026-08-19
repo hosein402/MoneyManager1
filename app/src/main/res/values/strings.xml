@@ -58,4 +58,8 @@
     <string name="settle">تسویه شد</string>
     <string name="settled_label">تسویه‌شده</string>
     <string name="no_debts">موردی ثبت نشده است</string>
+<string name="budgets_title">بودجه‌بندی ماهانه</string>
+    <string name="set_budget">تعیین بودجه</string>
+    <string name="no_budget_set">بدون بودجه</string>
+    <string name="budget_exceeded">بیش از بودجه</string>
 </resources>
