@@ -15,4 +15,7 @@ public interface BudgetDao {
 
     @Query("SELECT * FROM budgets")
     List<BudgetEntity> getAll();
+
+    @Query("DELETE FROM budgets")
+    void deleteAll();
 }
