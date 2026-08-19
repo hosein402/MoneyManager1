@@ -82,4 +82,23 @@
     <string name="csv_header">تاریخ,نوع,مبلغ,دسته,بانک,توضیح</string>
     <string name="csv_type_income">درآمد</string>
     <string name="csv_type_expense">هزینه</string>
+<string name="lock_title">ورود به برنامه</string>
+    <string name="lock_wrong_pin">رمز اشتباه است</string>
+    <string name="lock_use_fingerprint">ورود با اثر انگشت</string>
+    <string name="security_title">تنظیمات امنیتی</string>
+    <string name="enable_pin">فعال‌سازی رمز عددی</string>
+    <string name="disable_pin">غیرفعال کردن رمز</string>
+    <string name="change_pin">تغییر رمز</string>
+    <string name="enable_fingerprint">فعال‌سازی اثر انگشت</string>
+    <string name="disable_fingerprint">غیرفعال کردن اثر انگشت</string>
+    <string name="set_pin_title">تعیین رمز عددی</string>
+    <string name="new_pin_hint">رمز جدید (۴ رقم)</string>
+    <string name="confirm_pin_hint">تکرار رمز</string>
+    <string name="pin_mismatch">رمزها یکسان نیستند</string>
+    <string name="pin_too_short">رمز باید ۴ رقم باشد</string>
+    <string name="pin_saved">رمز ذخیره شد</string>
+    <string name="pin_status_enabled">رمز عددی: فعال</string>
+    <string name="pin_status_disabled">رمز عددی: غیرفعال</string>
+    <string name="fingerprint_status_enabled">اثر انگشت: فعال</string>
+    <string name="fingerprint_status_disabled">اثر انگشت: غیرفعال</string>
 </resources>
