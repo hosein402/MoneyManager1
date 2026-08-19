@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,7 @@ import ir.moneymanager.app.db.BudgetEntity;
 import ir.moneymanager.app.db.DebtEntity;
 import ir.moneymanager.app.db.InstallmentEntity;
 import ir.moneymanager.app.db.TransactionEntity;
+import ir.moneymanager.app.util.PersianUtils;
 
 public class BackupActivity extends AppCompatActivity {
 
@@ -40,9 +40,57 @@ public class BackupActivity extends AppCompatActivity {
 
         Button btnBackup = findViewById(R.id.btnBackup);
         Button btnRestore = findViewById(R.id.btnRestore);
+        Button btnExportCsv = findViewById(R.id.btnExportCsv);
 
         btnBackup.setOnClickListener(v -> doBackup());
         btnRestore.setOnClickListener(v -> pickRestoreFile());
+        btnExportCsv.setOnClickListener(v -> doExportCsv());
+    }
+
+    private void doExportCsv() {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            try {
+                List<TransactionEntity> list = db.transactionDao().getAllTransactions();
+
+                StringBuilder sb = new StringBuilder();
+                sb.append('\uFEFF');
+                sb.append(getString(R.string.csv_header)).append("\n");
+
+                for (TransactionEntity t : list) {
+                    String date = PersianUtils.toJalaliDateString(t.getDate());
+                    String type = TransactionEntity.TYPE_INCOME.equals(t.getType())
+                            ? getString(R.string.csv_type_income)
+                            : getString(R.string.csv_type_expense);
+                    String category = t.getCategory() == null ? "" : t.getCategory();
+                    String bank = t.getBank() == null ? "" : t.getBank();
+                    String description = t.getDescription() == null ? "" : t.getDescription();
+
+                    sb.append(csvEscape(date)).append(",");
+                    sb.append(csvEscape(type)).append(",");
+                    sb.append(t.getAmount()).append(",");
+                    sb.append(csvEscape(category)).append(",");
+                    sb.append(csvEscape(bank)).append(",");
+                    sb.append(csvEscape(description)).append("\n");
+                }
+
+                File dir = getExternalFilesDir(null);
+                File file = new File(dir, "transactions.csv");
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(sb.toString().getBytes());
+                fos.close();
+
+                runOnUiThread(() -> shareFile(file, "text/csv", R.string.csv_success));
+            } catch (Exception e) {
+                runOnUiThread(() -> Toast.makeText(this, R.string.restore_failed, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    private String csvEscape(String value) {
+        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        }
+        return value;
     }
 
     private void doBackup() {
@@ -104,20 +152,20 @@ public class BackupActivity extends AppCompatActivity {
                 fos.write(root.toString().getBytes());
                 fos.close();
 
-                runOnUiThread(() -> shareFile(file));
+                runOnUiThread(() -> shareFile(file, "application/json", R.string.backup_success));
             } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(this, R.string.restore_failed, Toast.LENGTH_SHORT).show());
             }
         });
     }
 
-    private void shareFile(File file) {
+    private void shareFile(File file, String mimeType, int successMessageRes) {
         Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", file);
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("application/json");
+        intent.setType(mimeType);
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        Toast.makeText(this, R.string.backup_success, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, successMessageRes, Toast.LENGTH_SHORT).show();
         startActivity(Intent.createChooser(intent, getString(R.string.backup_now)));
     }
 
@@ -238,4 +286,4 @@ public class BackupActivity extends AppCompatActivity {
             }
         });
     }
-        }
+                        }
