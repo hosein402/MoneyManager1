@@ -1,6 +1,7 @@
 package ir.moneymanager.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import ir.moneymanager.app.util.PersianUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_LOCK = 900;
+
     private TextView tvBalance, tvIncome, tvExpense, tvEmpty;
     private RecyclerView rvTransactions;
     private TransactionAdapter adapter;
@@ -29,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences lockPrefs = getSharedPreferences(SecurityActivity.PREFS_NAME, MODE_PRIVATE);
+        boolean pinEnabled = lockPrefs.getBoolean(SecurityActivity.KEY_PIN_ENABLED, false);
+        if (pinEnabled && !AppLockState.unlocked) {
+            startActivityForResult(new Intent(this, LockActivity.class), REQUEST_LOCK);
+        }
 
         db = AppDatabase.getInstance(this);
 
@@ -55,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnBudgets = findViewById(R.id.btnBudgets);
         Button btnBackup = findViewById(R.id.btnBackup);
         Button btnReminders = findViewById(R.id.btnReminders);
+        Button btnSecurity = findViewById(R.id.btnSecurity);
 
         btnAddIncome.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_INCOME));
         btnAddExpense.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_EXPENSE));
@@ -65,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
         btnBudgets.setOnClickListener(v -> startActivity(new Intent(this, BudgetsActivity.class)));
         btnBackup.setOnClickListener(v -> startActivity(new Intent(this, BackupActivity.class)));
         btnReminders.setOnClickListener(v -> startActivity(new Intent(this, RemindersActivity.class)));
+        btnSecurity.setOnClickListener(v -> startActivity(new Intent(this, SecurityActivity.class)));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_LOCK && resultCode != RESULT_OK) {
+            finishAffinity();
+        }
     }
 
     private void openAddTransaction(String type) {
@@ -98,4 +117,4 @@ public class MainActivity extends AppCompatActivity {
             });
         });
     }
-    }
+}
