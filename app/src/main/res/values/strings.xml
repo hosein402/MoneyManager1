@@ -77,4 +77,9 @@
     <string name="no_reminders">یادآوری ثبت نشده است</string>
     <string name="reminder_saved">یادآور ثبت شد</string>
     <string name="notification_channel_name">یادآوری پرداخت‌ها</string>
+<string name="export_csv">خروجی CSV تراکنش‌ها</string>
+    <string name="csv_success">فایل CSV ساخته شد</string>
+    <string name="csv_header">تاریخ,نوع,مبلغ,دسته,بانک,توضیح</string>
+    <string name="csv_type_income">درآمد</string>
+    <string name="csv_type_expense">هزینه</string>
 </resources>
