@@ -75,6 +75,21 @@
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
 
+        <activity
+            android:name=".SecurityActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MoneyManager" />
+
+        <activity
+            android:name=".SetPinActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MoneyManager" />
+
+        <activity
+            android:name=".LockActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MoneyManager" />
+
         <receiver
             android:name=".ReminderReceiver"
             android:exported="false" />
