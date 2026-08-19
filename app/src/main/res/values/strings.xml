@@ -77,5 +77,4 @@
     <string name="no_reminders">یادآوری ثبت نشده است</string>
     <string name="reminder_saved">یادآور ثبت شد</string>
     <string name="notification_channel_name">یادآوری پرداخت‌ها</string>
-</parameter>
 </resources>
