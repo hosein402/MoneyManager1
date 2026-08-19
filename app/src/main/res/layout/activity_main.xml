@@ -167,6 +167,14 @@
         android:textColor="@color/text_primary"
         android:text="@string/backup_title"
         android:layout_marginBottom="16dp" />
+  <Button
+        android:id="@+id/btnReminders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/card_background"
+        android:textColor="@color/text_primary"
+        android:text="@string/reminders_title"
+        android:layout_marginBottom="16dp" />
     <Button
         android:id="@+id/btnReports"
         android:layout_width="match_parent"
