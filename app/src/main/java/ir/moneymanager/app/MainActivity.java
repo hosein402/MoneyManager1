@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnSearch = findViewById(R.id.btnSearch);
         Button btnReports = findViewById(R.id.btnReports);
         Button btnDebts = findViewById(R.id.btnDebts);
+        Button btnBudgets = findViewById(R.id.btnBudgets);
 
         btnAddIncome.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_INCOME));
         btnAddExpense.setOnClickListener(v -> openAddTransaction(TransactionEntity.TYPE_EXPENSE));
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(v -> startActivity(new Intent(this, SearchActivity.class)));
         btnReports.setOnClickListener(v -> startActivity(new Intent(this, ReportsActivity.class)));
         btnDebts.setOnClickListener(v -> startActivity(new Intent(this, DebtsActivity.class)));
+        btnBudgets.setOnClickListener(v -> startActivity(new Intent(this, BudgetsActivity.class)));
     }
 
     private void openAddTransaction(String type) {
@@ -92,4 +94,4 @@ public class MainActivity extends AppCompatActivity {
             });
         });
     }
-}
+    }
