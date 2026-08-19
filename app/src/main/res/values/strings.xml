@@ -62,4 +62,11 @@
     <string name="set_budget">تعیین بودجه</string>
     <string name="no_budget_set">بدون بودجه</string>
     <string name="budget_exceeded">بیش از بودجه</string>
+<string name="backup_title">پشتیبان‌گیری و بازیابی</string>
+    <string name="backup_now">تهیه نسخه پشتیبان و اشتراک‌گذاری</string>
+    <string name="restore_now">بازیابی از فایل</string>
+    <string name="backup_success">فایل پشتیبان ساخته شد</string>
+    <string name="restore_confirm">با بازیابی، اطلاعات فعلی پاک و با اطلاعات فایل جایگزین می‌شود. ادامه می‌دهید؟</string>
+    <string name="restore_success">اطلاعات با موفقیت بازیابی شد</string>
+    <string name="restore_failed">فایل انتخابی معتبر نیست</string>
 </resources>
