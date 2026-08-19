@@ -49,6 +49,10 @@
             android:name=".AddDebtActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
+  <activity
+            android:name=".BudgetsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MoneyManager" />
     </application>
 
 </manifest>
