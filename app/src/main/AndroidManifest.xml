@@ -23,8 +23,8 @@
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
 
- <activity   
-     android:name=".InstallmentsActivity"
+        <activity
+            android:name=".InstallmentsActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
 
@@ -32,15 +32,18 @@
             android:name=".AddInstallmentActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
-    <activity
-        android:name=".SearchActivity"
+
+        <activity
+            android:name=".SearchActivity"
             android:exported="false"
-        android:theme="@style/Theme.MoneyManager" />
-    <activity
+            android:theme="@style/Theme.MoneyManager" />
+
+        <activity
             android:name=".ReportsActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
-<activity
+
+        <activity
             android:name=".DebtsActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
@@ -49,10 +52,27 @@
             android:name=".AddDebtActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
-  <activity
+
+        <activity
             android:name=".BudgetsActivity"
             android:exported="false"
             android:theme="@style/Theme.MoneyManager" />
+
+        <activity
+            android:name=".BackupActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MoneyManager" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>
